@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xml-module="http://www.mulesoft.org/schema/mule/xml-module" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/xml-module http://www.mulesoft.org/schema/mule/xml-module/current/mule-xml-module.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="de567c9c-5b92-45c4-a2c7-6871513eacd9" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="55f97de8-655a-4ef2-9915-5f85a999f506" />
+	<flow name="transformationdemo11Flow" doc:id="302a7391-1f6e-4727-b9cf-7440bd549e36" >
+		<http:listener doc:name="Listener" doc:id="ebc6eebe-9c60-49d5-98c4-9bcbac4fdfdf" config-ref="HTTP_Listener_config" path="/mypath"/>
+		<file:read doc:name="Read" doc:id="6706ddc9-8dc5-45a3-aa2a-5d53ef681086" config-ref="File_Config" path="C:\Users\A687640\Desktop\inputdemo\source.xml"/>
+		<xml-module:xslt-transform doc:name="Xslt transform" doc:id="27c70f76-6b2d-493a-ae33-8d470a562ce5" >
+			<xml-module:xslt ><![CDATA[<?xml version="1.0" ?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="/">
+	<rentalProperties>
+		<property>
+			<xsl:attribute name="contact">
+				<xsl:value-of select="rentalProperties/property/@contact"/>
+			</xsl:attribute>
+			<type>
+				<xsl:value-of select="rentalProperties/property/type"/>
+			</type>
+			<price>
+				<xsl:value-of select="rentalProperties/property/price"/>
+			</price>
+			<noofbedroom>
+				<xsl:value-of select="rentalProperties/property/noofbedroom"/>
+			</noofbedroom>
+			<noofbathroom>
+				<xsl:value-of select="rentalProperties/property/noofbathroom"/>
+			</noofbathroom>
+			<garage>
+				<xsl:value-of select="rentalProperties/property/garage"/>
+			</garage>
+		</property>
+		</rentalProperties>
+	</xsl:template>
+	</xsl:stylesheet>]]></xml-module:xslt>
+		</xml-module:xslt-transform>
+		<logger level="INFO" doc:name="Logger" doc:id="0911b7f5-8b89-4896-b322-3f66d25a46af" message="input xml is transformed"/>
+	</flow>
+</mule>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="6cb0fcf5-9aa1-4223-810a-22220b11ca6c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="transformation3Flow" doc:id="b14e062f-b06f-4eb7-95e6-149c4bd9c216" >
+		<http:listener doc:name="Listener" doc:id="8ebeba9b-271d-441b-994d-05dd53994720" path="/xml2json" config-ref="HTTP_Listener_config"/>
+		<ee:transform doc:name="Transform Message" doc:id="9f3e6cf4-dd49-4b14-938d-27195d8281d5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	department: {
+		deptId: payload.deptId,
+		deptName: payload.deptName,
+		deptLoc: payload.deptLoc,
+		deptPhone: payload.deptPhone
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

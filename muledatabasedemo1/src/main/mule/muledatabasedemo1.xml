@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7b894038-b12f-4f3d-bee4-df6ce079216a" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="9f8a3cab-e8be-4c90-89f8-4123bff9182d" >
+		<db:oracle-connection host="localhost" user="system" password="oracle" serviceName="xe" />
+	</db:config>
+	<flow name="muledatabasedemo1Flow" doc:id="ed140059-cbdf-430a-adeb-9e13631f172d" >
+		<http:listener doc:name="Listener" doc:id="0c9ba507-c89e-421b-837d-da847ffda364" config-ref="HTTP_Listener_config" path="/oracledb"/>
+		<logger level="INFO" doc:name="Logger" doc:id="20d4e258-76a0-4ba4-b463-7951a17a8be6" message="Logger before database select"/>
+		<db:select doc:name="Select" doc:id="e321b666-fc51-4cf5-b815-1dda0dc5ef5d" config-ref="Database_Config">
+			<db:sql ><![CDATA[select  * From emp11]]></db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="Logger" doc:id="2afd6c38-285d-45dd-baa4-7ab28f75102a" message="Logger after database select"/>
+	</flow>
+</mule>

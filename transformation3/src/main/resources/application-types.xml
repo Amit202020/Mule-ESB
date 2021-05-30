@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="deptjson" format="json">
+      <types:shape format="weave" example="examples/dept.json"><![CDATA[%dw 2.0
+
+type deptjson = {|
+  deptId: Number {"typeId": "int"}, 
+  deptName: String, 
+  deptLoc: String, 
+  deptPhone: Number {"typeId": "int"}
+|} {"example": "{\\\"deptId\\\":20,\\\"deptName\\\":\\\"admin\\\",\\\"deptLoc\\\":\\\"Bangalore\\\",\\\"deptPhone\\\":987656543}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="deptxml" format="xml">
+      <types:example format="xml" element="department" location="examples/dept.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#9f3e6cf4-dd49-4b14-938d-27195d8281d5">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="deptjson"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="deptxml"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

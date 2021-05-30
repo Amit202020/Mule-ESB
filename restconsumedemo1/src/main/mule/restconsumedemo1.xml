@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="19149264-ac34-4d7d-b33e-8a879d12a6da" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="1c45ec6e-8a8e-4620-8b87-4a3df7340b00" basePath="/RESTWSApp44/rest" >
+		<http:request-connection host="localhost" port="8082" />
+	</http:request-config>
+	<flow name="restconsumedemo1Flow" doc:id="0bf477a7-299b-444a-bc51-4f2ebff57cab" >
+		<http:listener doc:name="Listener" doc:id="de56fc01-6c92-4401-98a1-2ece2b707c46" config-ref="HTTP_Listener_config" path="/restws"/>
+		<logger level="INFO" doc:name="Logger" doc:id="20d8511e-e613-49e6-838f-bd9ebc9fe812" message="before rest consume"/>
+		<http:request method="GET" doc:name="Request" doc:id="6b7006b5-5332-4c17-aa8d-3592468be4f1" config-ref="HTTP_Request_configuration" path="/details/xml"/>
+		<logger level="INFO" doc:name="Logger" doc:id="21afb574-e3d4-4bc9-a275-c04838cf87f1" message="after rest consume"/>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="ec0043f1-ee71-4e61-936c-90f882df6ece" >
+				<logger level="INFO" doc:name="Logger" doc:id="9f18fd91-a5c4-4e09-a1fe-9908b7fdcc5a" message="tHE ERROR INSIDE ON ERRROR CONTINUE"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

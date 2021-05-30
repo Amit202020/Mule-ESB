@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b0117e7b-9034-411c-b4d9-cebb50a9dc53" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="94f5496d-30e0-48d9-984d-421d903d92f4" basePath="/RESTWSApp44/rest" >
+		<http:request-connection host="localhost" port="8082" />
+	</http:request-config>
+	<flow name="restconsumeFlow" doc:id="0299b92c-e07b-4269-b8ec-5339b763186c" >
+		<http:listener doc:name="Listener" doc:id="45658ffb-c134-4834-adbf-42d09af6d1fd" config-ref="HTTP_Listener_config" path="/myrest"/>
+		<http:request method="GET" doc:name="Request" doc:id="70c96b75-89f9-4754-a83d-dcbff5b35fd0" config-ref="HTTP_Request_configuration" path="/details/html"/>
+		<raise-error doc:name="Raise error" doc:id="5476698a-6c30-4aa3-9310-dd02b7535ad9" type="MULE:VALIDATION" description="this is the error for validation"/>
+		<logger level="INFO" doc:name="Logger" doc:id="172a37d9-950c-4767-b67e-011ad550f111" message="after raise error"/>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d4483d77-502a-4d90-b419-15d04bd930aa" >
+				<logger level="INFO" doc:name="Logger" doc:id="ff058844-ef8c-4106-b25e-1467da542c61" message="This is logger inside On Error Continue"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="449c9595-5685-43d4-8fdd-bcc2db120c2a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="d6545d63-eb24-4bdc-b36a-4b61c4fd7a5e" >
+		<wsc:connection wsdlLocation="http://localhost:8082/WebApp2/services/Hello?wsdl" service="HelloService" port="Hello" address="http://localhost:8082/WebApp2/services/Hello" />
+	</wsc:config>
+	<flow name="soapconsumerdemo1Flow" doc:id="2a6de062-73cf-421b-b9e5-4a998370e059" >
+		<http:listener doc:name="Listener" doc:id="c5d04f23-5ea6-4ec8-8218-d82e51ae8e9b" config-ref="HTTP_Listener_config" path="/soapws"/>
+		<set-variable value="#[attributes.queryParams.number1]" doc:name="Set Variable" doc:id="92954645-f578-4d9e-9a5a-7777aa5889d7" variableName="myvar1"/>
+		<set-variable value="#[attributes.queryParams.number2]" doc:name="Set Variable" doc:id="fea672fa-632d-4798-8576-7c72e4f5814c" variableName="myvar2"/>
+		<logger level="INFO" doc:name="Logger" doc:id="93ae24b7-d670-40a5-8cf3-402124807b52" message="logger before consume"/>
+		<ee:transform doc:name="Transform Message" doc:id="45065a99-40cc-42b4-90a3-6cba0b94b6d6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://pp
+---
+{
+	ns0#getAddition: {
+		ns0#num1: vars.myvar1 as Number,
+		ns0#num2: vars.myvar2 as Number
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:id="9e99bc6d-1643-4e10-962e-ea4c69b3a270" config-ref="Web_Service_Consumer_Config" operation="getAddition"/>
+		<logger level="INFO" doc:name="Logger" doc:id="65407b8c-a840-4afc-b6d7-2a92cf2d2108" message="Logger after consume"/>
+	</flow>
+</mule>

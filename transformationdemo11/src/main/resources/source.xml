@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no" ?>
+<rentalProperties>
+	<property contact="1">
+		<type> House</type>
+		<price> 30000 </price>
+		<address>
+			<streetno>1</streetno>
+			<city>
+				ban
+			</city>
+			<state> karnataka</state>
+			<pin>560095</pin>
+
+			<noofbedroom>3</noofbedroom>
+			<noofbathroom>2</noofbathroom>
+			<garage>
+				1
+			</garage>
+		</address>
+	</property>
+</rentalProperties>

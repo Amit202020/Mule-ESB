@@ -1,0 +1,11 @@
+ [
+   {
+                  "EmpId": 2020,
+                   "EmpName": "Paramita",
+                   "EmpEmail": "paro@gamil.com"
+                },{
+                  "EmpId": 2021,
+                   "EmpName": "Navin",
+                   "EmpEmail": "nav@gamil.com"
+ }
+ ]

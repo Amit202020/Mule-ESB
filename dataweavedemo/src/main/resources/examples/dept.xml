@@ -1,0 +1,6 @@
+<department>
+	<deptId>20</deptId>
+	<deptName>admin</deptName>
+        <deptLoc>Bangalore</deptLoc>
+        <deptPhone>987656543</deptPhone>
+</department>

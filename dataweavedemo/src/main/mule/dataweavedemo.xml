@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="968bb0e9-d0cb-4b56-ba3a-a347ad3dd43e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dataweavedemoFlow" doc:id="8fc3d392-7eb5-4382-9312-0465c39f86d8" >
+		<http:listener doc:name="Listener" doc:id="274ec4bc-c63f-4037-8229-6af53f4f52f0" config-ref="HTTP_Listener_config" path="/dwdemo"/>
+		<ee:transform doc:name="Transform Message" doc:id="db99f783-696f-4ef8-960c-abd8714fb7af" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	department: {
+		deptId: payload.deptId,
+		deptName: payload.deptName,
+		deptName: payload.deptName,
+		deptLoc: payload.deptLoc
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

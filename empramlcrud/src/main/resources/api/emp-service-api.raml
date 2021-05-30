@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: emp-service-api
+version: v1.1
+
+traits:
+   responseMessage:
+    usage: It is used to define your API response
+    description: This message is in JSON format
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "message" : "data operation completed"
+              }
+              
+/Employee:
+  get:
+    responses:
+     200:
+        body:
+          application/json:
+            example: !include mule_json/emp.json
+    
+  post:
+    body:
+      application/json:
+        example: !include mule_json/emp.json
+    is: [responseMessage]
+      
+  
+              
+      
+

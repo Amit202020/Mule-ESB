@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="8f337281-6393-4df8-a5d2-2cc2c9a41ca5" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="125ff2ee-8bd1-4a53-aa82-d9fcbab871e6" />
+	<flow name="filedemoFlow" doc:id="5f5c37e4-b183-49f3-9392-a2d859ee7bed" >
+		<file:listener doc:name="On New or Updated File" doc:id="92c88d52-a628-428c-8d23-a28ac746d272" config-ref="File_Config1" directory="C:\Users\A687640\Desktop\input1" autoDelete="true" moveToDirectory="C:\Users\A687640\Desktop\output1">
+			<scheduling-strategy >
+				<fixed-frequency frequency="5" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="65c2cc09-fe20-4a36-9f0a-8573c7e92b0a" message="#[payload]"/>
+	</flow>
+</mule>

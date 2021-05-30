@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="62fada86-c6af-48f9-a5b1-854eac2f1ed3" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="helloworldFlow" doc:id="c95703e8-6a23-4a29-9554-8e576acf9522" >
+		<http:listener doc:name="Listener" doc:id="fa61e621-3097-4fbd-920f-390c01035078" config-ref="HTTP_Listener_config" path="/hello"/>
+		<set-payload value="'Welcome To mule esb'" doc:name="Set Payload" doc:id="07ef2c6d-051d-49e9-ae28-86cee06af86d" />
+		<logger level="INFO" doc:name="Logger" doc:id="7b2f0d00-a304-4cda-a190-acef97bb0e30" message="'This is logger'"/>
+	</flow>
+</mule>

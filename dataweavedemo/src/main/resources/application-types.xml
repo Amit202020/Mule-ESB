@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="sourcedemo" format="json">
+      <types:shape format="weave" example="examples/dept-2.json"><![CDATA[%dw 2.0
+
+type sourcedemo = Array<{|  deptId: Number {"typeId": "int"},   deptName: String,   deptLoc: String|}> {"example": "[{\\\"deptId\\\":20,\\\"deptName\\\":\\\"IOT\\\",\\\"deptLoc\\\":\\\"Hyd\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="destinationdemo" format="xml">
+      <types:example format="xml" element="department" location="examples/dept-2.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#db99f783-696f-4ef8-960c-abd8714fb7af">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="sourcedemo"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="destinationdemo"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

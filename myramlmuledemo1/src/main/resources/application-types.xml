@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="jsonformat" format="json">
+      <types:shape format="weave" example="examples/emp.json"><![CDATA[%dw 2.0
+
+type jsonformat = Array<{|  EmpId: Number {"typeId": "int"},   EmpName: String,   EmpEmail: String|}> {"example": "[{\\\"EmpId\\\":2020,\\\"EmpName\\\":\\\"Paramita\\\",\\\"EmpEmail\\\":\\\"paro@gamil.com\\\"},{\\\"EmpId\\\":2021,\\\"EmpName\\\":\\\"Navin\\\",\\\"EmpEmail\\\":\\\"nav@gamil.com\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#73bc1521-dabc-4d3e-9f0c-4c4b519e58fc">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="jsonformat"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

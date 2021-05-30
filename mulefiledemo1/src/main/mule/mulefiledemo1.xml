@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="ec317bd3-17eb-4365-a047-406a1340acec" />
+	<flow name="mulefiledemo1Flow" doc:id="8c8157c4-9857-43a6-9bef-3ff7cb23f6eb" >
+		<file:listener doc:name="On New or Updated File" doc:id="c683492c-8f6b-4b31-ad27-e0f537244b50" config-ref="File_Config" directory="C:\Users\A687640\Desktop\input1" autoDelete="true" moveToDirectory="C:\Users\A687640\Desktop\output1" timeBetweenSizeCheckUnit="SECONDS">
+			<scheduling-strategy >
+				<fixed-frequency frequency="5" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="305bd1d1-6742-4b47-9469-4bdddec4f05b" message="File processing complete"/>
+	</flow>
+</mule>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d920f89c-29a7-479c-8594-3a006b4e82ab" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="d0c624b3-da7f-4bde-8472-c89f9eca6ef0" >
+		<db:oracle-connection host="localhost" user="system" password="oracle" serviceName="xe" />
+	</db:config>
+	<flow name="muledatabasedemo2Flow" doc:id="31febc75-9d69-43f2-910c-b810b6409a7a" >
+		<http:listener doc:name="Listener" doc:id="439ebae4-2b3b-47f2-8525-61d0e12d7266" config-ref="HTTP_Listener_config" path="/hello"/>
+		<db:select doc:name="Select" doc:id="50035434-452c-4b25-b125-ed458142543e" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from emp11]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="2cd00f99-2853-4f3f-9e5b-c5a4b43a7e8e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
